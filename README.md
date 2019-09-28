@@ -1,7 +1,9 @@
 # up to 6-AXIS-USBCNC-GRBL
 
+Ewidance note : 
 This repository is not intended to be maintened. It's just a copy of https://github.com/robomechs/6-AXIS-USBCNC-GRBL, slightly modifed to be compiled with Visual Studio Code + PlatformIO instead of Atollic TrueStudio, and holding my configuration for diving a laser.
 
+Folowing original Readme from Robomechs
 
 -----
 
