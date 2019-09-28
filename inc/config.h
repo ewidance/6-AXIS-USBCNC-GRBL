@@ -34,25 +34,24 @@
 // NOTE: OEMs can avoid the need to maintain/update the defaults.h and cpu_map.h files and use only
 // one configuration file by placing their specific defaults and pin map at the bottom of this file.
 // If doing so, simply comment out these two defines and see instructions below.
-//#define DEFAULTS_GENERIC
-#define ABC_AXIS_EXAMPLE
 
-#ifdef WIN32
-#define CPU_MAP_WIN32
-#endif
-#ifdef AVRTARGET
-#define CPU_MAP_ATMEGA328P // Arduino Uno CPU
-#endif
-#ifdef STM32F103C8
+// Don't forget to define CPU_MAP_STM32F103 for generic pinout
 //#define CPU_MAP_STM32F103
-#endif
+//#define DEFAULTS_GENERIC
+
+// Corexy Laser engraver
+#define DEFAULT_COREXYLASER
+#define CPU_MAP_STM32F103
+
+// For 6 axis, a special pinout is activated by ABC_AXIS_EXAMPLE
+//#define ABC_AXIS_EXAMPLE
 
 // --- YSV 22-06-2018
 //************************************************************************************************************
 // NONE GRBL 1.1f SETTINGS!:
 //************************************************************************************************************
 // Additional axis
-#define AA_AXIS // Disabled by default. Uncomment to enable.
+//#define AA_AXIS // Disabled by default. Uncomment to enable.
 // Don't use high step rate with B and C axis. Less than 80kHz recommended
 //#define AB_AXIS  // Disabled by default. Uncomment to enable.
 // CAUTION! C axis use SWD (PA13, PA14). After first flashing you can flash controller only with
@@ -165,18 +164,18 @@
 #define HOMING_CYCLE_1 ((1<<X_AXIS)|(1<<Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
 #define HOMING_CYCLE_2 ((1<<A_AXIS)|(1<<B_AXIS)|(1<<C_AXIS)) // OPTIONAL: Then move A,B,C at the same time.
 #else
-#define HOMING_CYCLE_0 (1<<Z_AXIS)                // REQUIRED: First move Z to clear workspace.
-#define HOMING_CYCLE_1 ((1<<X_AXIS)|(1<<Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
+// Example for a 3 axis machine
+// #define HOMING_CYCLE_0 (1<<Z_AXIS)                // REQUIRED: First move Z to clear workspace.
+// #define HOMING_CYCLE_1 ((1<<X_AXIS)|(1<<Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
 // #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
-#endif
-// ---
 
 // NOTE: The following are two examples to setup homing for 2-axis machines.
 // #define HOMING_CYCLE_0 ((1<<X_AXIS)|(1<<Y_AXIS))  // NOT COMPATIBLE WITH COREXY: Homes both X-Y in one cycle. 
+ #define HOMING_CYCLE_0 (1<<X_AXIS)  // COREXY COMPATIBLE: First home X
+ #define HOMING_CYCLE_1 (1<<Y_AXIS)  // COREXY COMPATIBLE: Then home Y
+// #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
 
-// #define HOMING_CYCLE_0 (1<<X_AXIS)  // COREXY COMPATIBLE: First home X
-// #define HOMING_CYCLE_1 (1<<Y_AXIS)  // COREXY COMPATIBLE: Then home Y
-
+#endif
 // Number of homing cycles performed after when the machine initially jogs to limit switches.
 // This help in preventing overshoot and should improve repeatability. This value should be one or
 // greater.
@@ -191,7 +190,7 @@
 // After homing, Grbl will set by default the entire machine space into negative space, as is typical
 // for professional CNC machines, regardless of where the limit switches are located. Uncomment this
 // define to force Grbl to always set the machine origin at the homed location despite switch orientation.
-// #define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.
+#define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.
 
 // Number of blocks Grbl executes upon startup. These blocks are stored in EEPROM, where the size
 // and addresses are defined in settings.h. With the current settings, up to 2 startup blocks may
@@ -251,7 +250,7 @@
 // defined at (http://corexy.com/theory.html). Motors are assumed to positioned and wired exactly as
 // described, if not, motions may move in strange directions. Grbl requires the CoreXY A and B motors
 // have the same steps per mm internally.
-// #define COREXY // Default disabled. Uncomment to enable.
+#define COREXY // Default disabled. Uncomment to enable.
 
 // Inverts pin logic of the control command pins based on a mask. This essentially means you can use
 // normally-closed switches on the specified pins, rather than the default normally-open switches.
@@ -529,11 +528,6 @@
 // 115200 baud will take 5 msec to transmit a typical 55 character report. Worst case reports are
 // around 90-100 characters. As long as the serial TX buffer doesn't get continually maxed, Grbl
 // will continue operating efficiently. Size the TX buffer around the size of a worst-case report.
-#if !defined (STM32F103C8)
-// #define RX_BUFFER_SIZE 128 // (1-254) Uncomment to override defaults in serial.h
-// #define TX_BUFFER_SIZE 100 // (1-254)
-#endif
-
 // A simple software debouncing feature for hard limit switches. When enabled, the interrupt 
 // monitoring the hard limit switch pins will enable the Arduino's watchdog timer to re-check 
 // the limit pin state after a delay of about 32msec. This can help with CNC machines with 

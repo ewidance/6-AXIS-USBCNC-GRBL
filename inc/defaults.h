@@ -601,4 +601,42 @@
 		#define DEFAULT_HOMING_PULLOFF 1.5f 					// mm
 #endif
 
+#ifdef DEFAULT_COREXYLASER
+// Corexy laser
+#define DEFAULT_X_STEPS_PER_MM 160.000f // 20 tooth / 2mm / 32th step / 200 step = 6400/40
+#define DEFAULT_Y_STEPS_PER_MM 160.000f // 20 tooth / 2mm / 32th step / 200 step = 6400/40
+#define DEFAULT_Z_STEPS_PER_MM 10.000f // unused
+#define DEFAULT_X_MAX_RATE 5000.0f // mm/min
+#define DEFAULT_Y_MAX_RATE 5000.0f // mm/min
+#define DEFAULT_Z_MAX_RATE 10000.0f // mm/min
+#define DEFAULT_X_ACCELERATION (5000.0f*60*60) // 5000*60*60 mm/min^2 = 5000 mm/sec^2
+#define DEFAULT_Y_ACCELERATION (5000.0f*60*60) // 5000*60*60 mm/min^2 = 5000 mm/sec^2
+#define DEFAULT_Z_ACCELERATION (90000.0f*60*60) // 90000*60*60 mm/min^2 = 90000 mm/sec^2
+#define DEFAULT_X_MAX_TRAVEL 130.0f // mm
+#define DEFAULT_Y_MAX_TRAVEL 107.0f // mm
+#define DEFAULT_Z_MAX_TRAVEL 80.0f // mm
+#define DEFAULT_SPINDLE_RPM_MAX 100.0f // rpm
+#define DEFAULT_SPINDLE_RPM_MIN 1.0f // rpm
+#define DEFAULT_STEP_PULSE_MICROSECONDS 10
+#define DEFAULT_STEPPING_INVERT_MASK 0
+#define DEFAULT_DIRECTION_INVERT_MASK 0
+#define DEFAULT_STEPPER_IDLE_LOCK_TIME 25 // msec (0-254, 255 keeps steppers enabled)
+#define DEFAULT_STATUS_REPORT_MASK 1 // MPos enabled
+#define DEFAULT_JUNCTION_DEVIATION 0.02f // mm
+#define DEFAULT_ARC_TOLERANCE 0.002f // mm
+#define DEFAULT_REPORT_INCHES 0 // false
+#define DEFAULT_INVERT_ST_ENABLE 0 // false
+#define DEFAULT_INVERT_LIMIT_PINS 0 // false
+#define DEFAULT_SOFT_LIMIT_ENABLE 0 // false
+#define DEFAULT_HARD_LIMIT_ENABLE 0  // false
+#define DEFAULT_INVERT_PROBE_PIN 0 // false
+#define DEFAULT_LASER_MODE 1 // false
+#define DEFAULT_HOMING_ENABLE 1  // false
+#define DEFAULT_HOMING_DIR_MASK 3 // move positive dir
+#define DEFAULT_HOMING_FEED_RATE 500.0f // mm/min
+#define DEFAULT_HOMING_SEEK_RATE 5000.0f // mm/min
+#define DEFAULT_HOMING_DEBOUNCE_DELAY 250 // msec (0-65k)
+#define DEFAULT_HOMING_PULLOFF 1.0f // mm
+#endif
+
 #endif
